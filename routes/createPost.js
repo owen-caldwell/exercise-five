@@ -12,6 +12,10 @@ router.get("/", (request, response) => {
 
 router.get('/submit', (request, response) => {
     const {title, postText, author} = request.query;
+    if (!title || !postText || !author) {
+        response.send({error: "Missing required fields" });
+        return;
+    }
     const idFromTitle = title.replace(/\s+/g, "-").toLowerCase();
     const setBlogPost = firestore.setDoc(
         firestore.doc(db, "posts", idFromTitle), {
@@ -22,7 +26,7 @@ router.get('/submit', (request, response) => {
     );
     setBlogPost
         .then((res) => {
-            response.send(`Good job!`)
+            response.sendFile(path.join(__dirname, '../public', 'success.html'))
         })
         .catch((error) => {
             response.send(`Error Submitting: ${error.toString()}`)
