@@ -9,7 +9,7 @@ const port = 3000;
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDf8LnNADugnRF1V_fT_vu--bdgxx3ptgg",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "exercise-five-11388.firebaseapp.com",
   projectId: "exercise-five-11388",
   storageBucket: "exercise-five-11388.firebasestorage.app",
@@ -25,12 +25,12 @@ const createPostRoute = require("./routes/createPost.js");
 const singlePostRoute = require("./routes/singlePost.js");
 
 app.use("/", indexRoute);
-app.use("/createPost", createPostRoute);
+app.use("/create", createPostRoute);
 app.use("/post", singlePostRoute);
-// app.use(express.static("public"))
+app.use(express.static("public"));
 
 app.listen(port, () => {
   console.log(`Cool app listening on port ${port}`);
 });
 
-module.exports = app
+module.exports = app;
